@@ -1,0 +1,40 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "frozen_model_file = os.path.abspath(C:\\Users\\Steven\\Documents\\HTN v. 4)\n",
+    "input_tensor_shapes = {\"input/placeholder:0\": [1, 32, 32, 9]}\n",
+    "# Output CoreML model path\n",
+    "coreml_model_file = './model.mlmodel'\n",
+    "output_tensor_names = ['output/prediction:0']\n",
+    "def convert():\n",
+    "    # Read the pb model\n",
+    "    with tf.gfile.GFile(frozen_model_file, \"rb\") as f:\n",
+    "        graph_def = tf.GraphDef()\n",
+    "        graph_def.ParseFromString(f.read())\n",
+    "    # Then, we import the graph_def into a new Graph\n",
+    "    tf.import_graph_def(graph_def, name=\"\")\n",
+    "    # Convert\n",
+    "    tfcoreml.convert(\n",
+    "        tf_model_path=frozen_model_file,\n",
+    "        mlmodel_path=coreml_model_file,\n",
+    "        input_name_shape_dict=input_tensor_shapes,\n",
+    "        output_feature_names=output_tensor_names)\n",
+    "convert()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
